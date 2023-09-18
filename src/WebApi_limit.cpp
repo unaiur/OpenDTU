@@ -5,6 +5,7 @@
 #include "WebApi_limit.h"
 #include "WebApi.h"
 #include "WebApi_errors.h"
+#include "SafeLimits.h"
 #include <AsyncJson.h>
 #include <Hoymiles.h>
 
@@ -147,6 +148,9 @@ void WebApiLimitClass::onLimitPost(AsyncWebServerRequest* request)
     }
 
     inv->sendActivePowerControlRequest(limit, type);
+    if (type == PowerLimitControlType::AbsolutNonPersistent || type == PowerLimitControlType::RelativNonPersistent) {
+        SafeLimitsInstance.updated(serial);
+    }
 
     retMsg["type"] = "success";
     retMsg["message"] = "Settings saved!";

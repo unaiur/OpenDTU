@@ -16,6 +16,7 @@
 #include "NetworkSettings.h"
 #include "NtpSettings.h"
 #include "PinMapping.h"
+#include "SafeLimits.h"
 #include "SunPosition.h"
 #include "Utils.h"
 #include "WebApi.h"
@@ -145,6 +146,8 @@ void setup()
     InverterSettings.init();
 
     Datastore.init();
+
+    SafeLimitsInstance.init();
 }
 
 void loop()
@@ -172,5 +175,7 @@ void loop()
     MessageOutput.loop();
     yield();
     LedSingle.loop();
+    yield();
+    SafeLimitsInstance.loop();
     yield();
 }
